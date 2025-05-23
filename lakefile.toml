@@ -1,0 +1,10 @@
+name = "blex"
+version = "0.1.0"
+defaultTargets = ["blex"]
+
+[[lean_lib]]
+name = "Blex"
+
+[[lean_exe]]
+name = "blex"
+root = "Main"
