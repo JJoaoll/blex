@@ -161,7 +161,60 @@ def r₅ := klosr r₄
 #eval fitsIn "ababababababa" (klosr (conct r₁ r₂))
 #eval fitsIn "abbbabbb" (klosr (conct r₃ r₂))
 
+-- -- p/ ñ abusar das Strings vazias, serão Option's!
+-- inductive Ball
+--   | ball (call : Option String)
+-- deriving Repr, Inhabited
 
+-- inductive MultiArr
+--   | arrs (p : Char → Bool)
+-- -- | arrs (as : List Char) -- another option
+-- deriving Inhabited
+
+-- structure NFA where
+--   circ : Ball
+--   eggs : List (MultiArr × NFA)
+-- deriving Inhabited
+
+-- -- ex. pag 24
+-- open NFA MultiArr in
+-- def tL :=
+--   NFA.mk (Ball.ball none) [(arrs (· == 'a'),
+--     NFA.mk (Ball.ball none) [(arrs (· == 'a'),
+--       )]) ]
+-- #check NFA.mk (Ball.ball $ some "1") []
+
+structure Ball where
+  call? : Option String
+deriving Repr, Inhabited
+
+structure Arr where
+  char : Char
+deriving Repr, Inhabited
+
+structure NFA where
+  circs : List Ball       -- A pos na Lista vira id
+  edges : List (List Arr) -- A pos diz de onde vem as setas
+deriving Repr, Inhabited
+
+
+
+-- inductive MultiArr
+-- -- | arrs (p : Char → Bool)
+--   | arrs (as : List Char) -- another option
+-- deriving Repr, Inhabited
+
+
+
+
+
+
+
+-- inductive NFA where
+--   | L (l : NFA)
+--   | R (r : NFA)
+--   | LR (l r : NFA)
+--   | _
 
 
 
