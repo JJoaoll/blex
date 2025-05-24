@@ -184,26 +184,85 @@ def r₅ := klosr r₄
 --       )]) ]
 -- #check NFA.mk (Ball.ball $ some "1") []
 
-structure Ball where
-  call? : Option String
-deriving Repr, Inhabited
 
-structure Arr where
-  char : Char
-deriving Repr, Inhabited
-
-structure NFA where
-  circs : List Ball       -- A pos na Lista vira id
-  edges : List (List Arr) -- A pos diz de onde vem as setas
-deriving Repr, Inhabited
-
-
-
--- inductive MultiArr
--- -- | arrs (p : Char → Bool)
---   | arrs (as : List Char) -- another option
+-- -- TIREI UNIVERSOS PQ DAVA ERRO NA HORA DE EXIBIR!
+-- structure Ball where
+--   call? : Option String
 -- deriving Repr, Inhabited
 
+-- #check 'ε'
+-- -- TODO: PROJECTIONS
+-- inductive Arr : Nat → Type u where
+--   | mk (c : Char) (head : Fin (n + 1)) : Arr n -- head: ending state.
+--   -- this n + 1 is explained above.
+-- deriving Repr, Inhabited
+
+-- #eval (⟨0, by decide⟩ : Fin 1)
+-- -- #eval (⟨1, by decide⟩ : Fin 1) --> doesnt work
+
+--  -- TODO: Talvez tenha problemas por off_by_one :P
+-- inductive NFA : Nat → Type where
+--   | mk (circs : Vector Ball n) (edges : Vector (List $ Arr $ n) (n+1)) : NFA n
+--   -- circs : List Ball       -- A pos na Lista vira id
+--   -- edges : List (List Arr) -- A pos diz de onde vem as setas
+-- deriving Repr, Inhabited
+
+-- #check (Vector.mk #[] (by decide) : Vector Nat 0)
+-- -- #eval (NFA.mk (Vector.mk #[] (by decide)) (Vector.mk #[] (by decide)) : NFA 0)
+-- def tst1 : Vector (List $ Arr 0) 0 := Vector.mk #[] (by simp)
+
+-- #check (NFA.mk (Vector.mk #[Ball.mk none] (by decide)) (Vector.mk #[[], []] (by decide)) : NFA 1)
+-- #eval (NFA.mk (Vector.mk #[Ball.mk none] (by decide))
+--   (Vector.mk #[[Arr.mk '∈' 0, Arr.mk '∈' 0], []] (by decide)) : NFA 1)
+
+-- #eval (NFA.mk (Vector.mk #[Ball.mk none, Ball.mk $ some "", Ball.mk $ some ""] (by decide))
+--   (Vector.mk #[[Arr.mk '∈' ⟨1, by decide⟩, Arr.mk '∈' ⟨2, by decide⟩], [], [], []] (by decide)) : NFA 3)
+
+-- --                           1      2       3        4       5        6
+-- #eval (NFA.mk (Vector.mk #[⟨none⟩, ⟨none⟩, ⟨some ""⟩, ⟨none⟩, ⟨some ""⟩, ⟨none⟩] (by decide))
+--   (Vector.mk #[
+-- /- 0 -/ [⟨'_', 4⟩],
+-- /- 1 -/ [⟨'a', 3⟩],
+-- /- 2 -/ [⟨'a', 1⟩],
+-- /- 3 -/ [⟨'a', 2⟩],
+-- /- 4 -/ [⟨'∈', 3⟩, ⟨'∈', 5⟩]
+-- /- 5 -/ [⟨'a', ⟨6, by decide⟩⟩],
+-- /- 6 -/ [⟨'a', 5⟩]
+--   ] (by decide)) : NFA 6)
+
+
+-- -- inductive NFA : Nat → Type where
+-- --   | mk (circs : Vector Ball n) (edges : Vector (List $ Arr $ n-1) n) : NFA n
+
+
+-- -- i'll abuse the 0 to represent a
+-- -- edge coming from no-where, because im
+-- -- lazy
+-- -- TODO: learn how to deal with final states
+-- def Regex.toNFA (rx : Regex) : (n : Nat) × NFA n :=
+--   match rx with                                                                  -- decide just failed
+--   | char c => ⟨1, NFA.mk (Vector.mk #[⟨none⟩] (by decide)) (Vector.mk #[[⟨c, 1⟩], []] (by simp))⟩
+--   | ε => ⟨1, NFA.mk (Vector.mk #[⟨none⟩] (by decide)) (Vector.mk #[[⟨'∈', 1⟩], []] (by decide))⟩
+--   | altrn rx₁ rx₂ =>
+--     let nf₁ := rx₁.toNFA
+--     let nf₂ := rx₂.toNFA
+--     sorry
+
+--   | conct Mx Nx =>
+--     let M := rx₁.toNFA
+--     let N := rx₂.toNFA
+--     match M, N with
+--     | ⟨⟨xs, _xs⟩, ⟨ys, _ys⟩ =>
+
+
+
+--   | klosr rx => sorry
+
+-- -- inductive MultiArr
+-- -- -- | arrs (p : Char → Bool)
+-- --   | arrs (as : List Char) -- another option
+-- -- deriving Repr, Inhabited
+ -- isso so vai ficar temporariamente salvo no gh
 
 
 
